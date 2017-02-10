@@ -4,13 +4,16 @@ package com.example.ali.test.controller.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.ali.test.core.DownloadActivityInterface;
 import com.example.ali.test.core.DownloadActivity;
 import com.example.ali.test.parser.JsonParser;
@@ -19,16 +22,33 @@ import com.example.ali.test.model.Movie;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DetailFragment extends Fragment {
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.image)
+    ImageView collapsingImage;
+    @BindView(R.id.title)
+    TextView title;
+    @BindView(R.id.poster_img)
+    ImageView posterImg;
+    @BindView(R.id.releaseDate)
+    TextView releaseData;
+    @BindView(R.id.overview)
+    TextView overview;
+    @BindView(R.id.review)
+    TextView review;
     DownloadActivity.OnResultListener onResultListenerReviews;
     DownloadActivity.OnResultListener onResultListenerVideos;
     private DownloadActivityInterface downloadActivityInterface;
-
-    TextView title;
+    String id ;
+//    TextView title;
     String text = " ";
     public DetailFragment() {
         // Required empty public constructor
@@ -43,18 +63,26 @@ public class DetailFragment extends Fragment {
             Log.v("Test","Must Implement Interface");
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         container.removeAllViews();
+        View view =  inflater.inflate(R.layout.fragment_detail, container, false);
+        ButterKnife.bind(this,view);
         Bundle args = this.getArguments();
         if (args != null) {
             Movie movie = args.getParcelable("Movie");
-            Log.v("Test", "DF Movie : " + movie.getTitle());
+            id = movie.getId();
+            collapsingToolbarLayout.setTitle(movie.getTitle());
+            title.setText(movie.getTitle());
+            Glide.with(getContext()).load("http://image.tmdb.org/t/p/w185/"+movie.getPosterUrl()).into(posterImg);
+            Glide.with(getContext()).load("http://image.tmdb.org/t/p/w500"+movie.getBackdropPath()).into(collapsingImage);
+            releaseData.setText(movie.getReleaseData());
+            overview.setText(movie.getOverview());
+            Log.v("Test", "DF Movie : " + movie.getId());
         }
-        View view =  inflater.inflate(R.layout.fragment_detail, container, false);
-        title = (TextView) view.findViewById(R.id.title);
         return view;
 
     }
@@ -66,7 +94,7 @@ public class DetailFragment extends Fragment {
         final String APPID_PARAM = "api_key";
 
         Uri builtUri= Uri.parse(MOVIE_BASE_URL).buildUpon()
-                .appendPath("346672")
+                .appendPath(id)
                 .appendPath("reviews")
                 .appendQueryParameter(APPID_PARAM,"144eefdfe75e0f8cb5d9f9b68d178670")
                 .build();
@@ -83,9 +111,12 @@ public class DetailFragment extends Fragment {
             @Override
             public void onSuccess(List<Object> movies) {
                 for (Object x:movies){
-                    text += " Author : "+((Movie)x).getAuthor()+ "\n";
-                    text += " Content :"+((Movie)x).getContent()+"\n";
+                    if(((Movie)x).getAuthor()!=null){
+                        text += " Author : "+((Movie)x).getAuthor()+ "\n";
+                        text += " Content :"+((Movie)x).getContent()+"\n";
+                    }
                 }
+                review.setText(text);
             }
             @Override
             public void onError(String errorMessage) {
@@ -96,7 +127,7 @@ public class DetailFragment extends Fragment {
 
 
         builtUri= Uri.parse(MOVIE_BASE_URL).buildUpon()
-                .appendPath("346672")
+                .appendPath(id)
                 .appendPath("videos")
                 .appendQueryParameter(APPID_PARAM,"144eefdfe75e0f8cb5d9f9b68d178670")
                 .build();
@@ -111,10 +142,10 @@ public class DetailFragment extends Fragment {
             @Override
             public void onSuccess(List<Object> movies) {
                 for (Object x:movies){
-                    text += " name : "+((Movie)x).getName() + "\n";
-                    text += " key :"+((Movie)x).getKey() +"\n";
+//                    text += " name : "+((Movie)x).getName() + "\n";
+//                    text += " key :"+((Movie)x).getKey() +"\n";
                 }
-                title.setText(text);
+//                title.setText(text);
             }
             @Override
             public void onError(String errorMessage) {
@@ -123,4 +154,5 @@ public class DetailFragment extends Fragment {
         };
         ((DownloadActivity)getActivity()).fetch(onResultListenerVideos);
     }
+
 }

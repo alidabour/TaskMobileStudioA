@@ -53,6 +53,9 @@ public class MainActivity extends DownloadActivity implements DownloadActivityIn
         this.parser = parser;
     }
 
-
+//    @Override
+//    public void onBackPressed(){
+//        getFragmentManager().popBackStackImmediate();
+//    }
 
 }

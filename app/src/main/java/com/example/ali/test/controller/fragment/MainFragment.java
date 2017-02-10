@@ -80,7 +80,7 @@ public class MainFragment extends Fragment {
         downloadActivityInterface.setUrl(builtUri.toString());
 
         JsonParser jsonParser = new JsonParser();
-        String[] objects = {"poster_path","title"};
+        String[] objects = {"poster_path","id","release_date","overview","title"};
         jsonParser.setObjects(objects);
         downloadActivityInterface.setParser(jsonParser);
 
@@ -117,6 +117,7 @@ public class MainFragment extends Fragment {
 
 
     }
+
 
 
 }

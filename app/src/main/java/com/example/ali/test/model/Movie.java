@@ -11,6 +11,10 @@ import java.util.HashMap;
 
 public class Movie implements Parcelable{
     private String posterUrl;
+    private String id;
+    private String releaseData;
+    private String backdropPath;
+    private String overview;
     private String title;
     private String author;
     private String content;
@@ -22,6 +26,10 @@ public class Movie implements Parcelable{
     }
     public Movie(HashMap<String,String> data){
         this.posterUrl = data.get("poster_path");
+        this.id = data.get("id");
+        this.releaseData = data.get("release_date");
+        this.backdropPath = data.get("backdrop_path");
+        this.overview = data.get("overview");
         this.title = data.get("title");
         this.author = data.get("author");
         this.content = data.get("content");
@@ -30,6 +38,10 @@ public class Movie implements Parcelable{
     }
     public Movie(Parcel in) {
         this.posterUrl = in.readString();
+        this.id = in.readString();
+        this.releaseData = in.readString();
+        this.backdropPath = in.readString();
+        this.overview = in.readString();
         this.title = in.readString();
         this.author = in.readString();
         this.content = in.readString();
@@ -41,6 +53,10 @@ public class Movie implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.posterUrl);
+        dest.writeString(this.id);
+        dest.writeString(this.releaseData);
+        dest.writeString(this.backdropPath);
+        dest.writeString(this.overview);
         dest.writeString(this.title);
         dest.writeString(this.author);
         dest.writeString(this.content);
@@ -72,6 +88,10 @@ public class Movie implements Parcelable{
     public String getPosterUrl(){
         return this.posterUrl;
     }
+    public String getId(){return this.id;}
+    public String getReleaseData(){return this.releaseData;}
+    public String getBackdropPath(){return this.backdropPath;}
+    public String getOverview() {return this.overview;}
     public String getTitle() {
         return title;
     }
@@ -87,7 +107,5 @@ public class Movie implements Parcelable{
     public String getKey() {
         return key;
     }
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
+
 }
