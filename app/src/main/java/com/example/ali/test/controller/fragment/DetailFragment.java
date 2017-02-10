@@ -2,6 +2,7 @@ package com.example.ali.test.controller.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -48,7 +49,6 @@ public class DetailFragment extends Fragment {
     DownloadActivity.OnResultListener onResultListenerVideos;
     private DownloadActivityInterface downloadActivityInterface;
     String id ;
-//    TextView title;
     String text = " ";
     public DetailFragment() {
         // Required empty public constructor
@@ -68,12 +68,11 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        container.removeAllViews();
         View view =  inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this,view);
-        Bundle args = this.getArguments();
-        if (args != null) {
-            Movie movie = args.getParcelable("Movie");
+        Intent intent = getActivity().getIntent();
+        if (intent != null) {
+            Movie movie = intent.getParcelableExtra(getString(R.string.movieIntent));
             id = movie.getId();
             collapsingToolbarLayout.setTitle(movie.getTitle());
             title.setText(movie.getTitle());
@@ -81,7 +80,6 @@ public class DetailFragment extends Fragment {
             Glide.with(getContext()).load("http://image.tmdb.org/t/p/w500"+movie.getBackdropPath()).into(collapsingImage);
             releaseData.setText(movie.getReleaseData());
             overview.setText(movie.getOverview());
-            Log.v("Test", "DF Movie : " + movie.getId());
         }
         return view;
 

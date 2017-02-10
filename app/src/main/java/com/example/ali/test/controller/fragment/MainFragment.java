@@ -2,6 +2,7 @@ package com.example.ali.test.controller.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ali.test.controller.activity.DetailActivity;
 import com.example.ali.test.core.DownloadActivityInterface;
 import com.example.ali.test.core.DownloadActivity;
 import com.example.ali.test.parser.JsonParser;
-import com.example.ali.test.controller.activity.MainActivity;
 import com.example.ali.test.R;
 import com.example.ali.test.adapter.MovieRecycleAdapter;
 import com.example.ali.test.model.Movie;
@@ -56,7 +57,6 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.v("Test","\n\n\n\n MainFragment");
         // Inflate the layout for this fragment
         if(container !=null){
             container.removeAllViews();
@@ -84,7 +84,12 @@ public class MainFragment extends Fragment {
         downloadActivityInterface.setUrl(builtUri.toString());
 
         JsonParser jsonParser = new JsonParser();
-        String[] objects = {"poster_path","id","release_date","backdrop_path","overview","title"};
+        String[] objects = {getString(R.string.poster_path)
+                ,getString(R.string.movie_id)
+                ,getString(R.string.relase_data)
+                ,getString(R.string.backdrop_path)
+                ,getString(R.string.overview)
+                ,getString(R.string.title)};
         jsonParser.setObjects(objects);
         downloadActivityInterface.setParser(jsonParser);
 
@@ -97,17 +102,9 @@ public class MainFragment extends Fragment {
                 movieRecycleAdapter = new MovieRecycleAdapter(getContext(), result, new MovieRecycleAdapter.OnClickHandler() {
                     @Override
                     public void onClick(Movie movieResult) {
-                        DetailFragment detailFragment = new DetailFragment();
-                        Bundle args = new Bundle();
-                        args.putParcelable("Movie",movieResult);
-                        detailFragment.setArguments(args);
-                        ((MainActivity)getActivity()).getSupportFragmentManager().beginTransaction()
-//                        .detach(MainFragment.this)
-//                        .hide(MainFragment.this)
-//                        .remove(MainFragment.this)
-                                .replace(R.id.fragment,detailFragment,"df")
-                                .addToBackStack(null)
-                                .commit();
+                        Intent intent = new Intent(getActivity(), DetailActivity.class);
+                        intent.putExtra(getString(R.string.movieIntent),movieResult);
+                        startActivity(intent);
                     }
                 });
                 recyclerView.setAdapter(movieRecycleAdapter);

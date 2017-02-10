@@ -26,36 +26,33 @@ public class DownloadAsyncTask extends AsyncTask<URL,Void,String> {
     protected String doInBackground(URL... urls) {
         Log.v("Test","Start of Async Task");
         String result=null;
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
+        HttpURLConnection urlConnection ;
+        BufferedReader reader ;
 
-            try{
-                urlConnection = (HttpURLConnection) urls[0].openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
-                }
-
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-                if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    return null;
-                }
-                result=buffer.toString();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+        try{
+            urlConnection = (HttpURLConnection) urls[0].openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+            InputStream inputStream = urlConnection.getInputStream();
+            StringBuffer buffer = new StringBuffer();
+            if (inputStream == null) {
+                // Nothing to do.
+                return null;
             }
 
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line + "\n");
+            }
+            if (buffer.length() == 0) {
+                // Stream was empty.  No point in parsing.
+                return null;
+            }
+            result=buffer.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 
@@ -63,6 +60,5 @@ public class DownloadAsyncTask extends AsyncTask<URL,Void,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         stringResponseListener.notifySuccess(s);
-//        Log.v("MainActivity","Result: "+s);
     }
 }

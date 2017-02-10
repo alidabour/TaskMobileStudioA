@@ -32,7 +32,6 @@ public class JsonParser implements SuperParser {
         this.json = data;
         try {
             if(this.json != null){
-
                 parseJson(new JSONObject(this.json));
                 List<Object> moviesObjects = new ArrayList<>();
                 for (HashMap<String, String> x : maps) {
@@ -62,20 +61,15 @@ public class JsonParser implements SuperParser {
         this.objects=objects;
     }
 
-    //Parse Json
     public  void getArray(Object object2) throws ParseException, JSONException {
-//        Log.v("JSONTest","getArray :"+object2);
         JSONArray jsonArr = (JSONArray) object2;
         for (int k = 0; k < jsonArr.length(); k++) {
             if (jsonArr.get(k) instanceof JSONObject) {
                 parseJson((JSONObject) jsonArr.get(k));
-            } else {
-//                Log.v("JSONTest","jsonArr.get(k): "+jsonArr.get(k));
             }
 
         }
     }
-
     public void parseJson(JSONObject jsonObject) throws ParseException, JSONException {
         Iterator<String> iterator = jsonObject.keys();
         HashMap<String,String> map = new HashMap<>();

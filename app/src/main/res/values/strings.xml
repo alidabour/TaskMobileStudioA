@@ -3,4 +3,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="movieIntent">Movie</string>
+    <string name="poster_path">poster_path</string>
+    <string name="movie_id">id</string>
+    <string name="relase_data">release_date</string>
+    <string name="backdrop_path">backdrop_path</string>
+    <string name="title">title</string>
+    <string name="overview">overview</string>
+    <string name="average_rating_6_7">Average rating: 6.7</string>
 </resources>

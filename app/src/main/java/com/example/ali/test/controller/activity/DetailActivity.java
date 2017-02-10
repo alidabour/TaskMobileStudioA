@@ -1,23 +1,19 @@
 package com.example.ali.test.controller.activity;
 
 import android.os.Bundle;
-import com.example.ali.test.core.DownloadActivityInterface;
 import com.example.ali.test.R;
-import com.example.ali.test.core.SuperParser;
 import com.example.ali.test.core.DownloadActivity;
+import com.example.ali.test.core.DownloadActivityInterface;
+import com.example.ali.test.core.SuperParser;
 
-/**
- * Created by Ali on 2/7/2017.
- */
-
-public class MainActivity extends DownloadActivity implements DownloadActivityInterface {
+public class DetailActivity extends DownloadActivity implements DownloadActivityInterface{
     String url;
     String dataModel;
     SuperParser parser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detail);
     }
 
     @Override
@@ -45,7 +41,6 @@ public class MainActivity extends DownloadActivity implements DownloadActivityIn
     public void setParser(SuperParser parser) {
         this.parser = parser;
     }
-
 
 
 }

@@ -3,10 +3,8 @@ package com.example.ali.test.core;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import com.example.ali.test.network.DownloadAsyncTask;
+import com.example.ali.test.network.DownloadVolley;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 public abstract class DownloadActivity extends AppCompatActivity {
     public OnResultListener onResultListener;
@@ -34,16 +32,16 @@ public abstract class DownloadActivity extends AppCompatActivity {
         };
 
         //Volley
-//        DownloadVolley downloadVolley = new DownloadVolley(getApplicationContext(), responseListener);
-//        downloadVolley.execute(getUrl());
+        DownloadVolley downloadVolley = new DownloadVolley(getApplicationContext(), responseListener);
+        downloadVolley.execute(getUrl());
 
         //AsyncTask
-        DownloadAsyncTask d = new DownloadAsyncTask(responseListener);
-        try {
-            d.execute(new URL(getUrl()));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+//        DownloadAsyncTask d = new DownloadAsyncTask(responseListener);
+//        try {
+//            d.execute(new URL(getUrl()));
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
 
     }
     public abstract String getUrl();

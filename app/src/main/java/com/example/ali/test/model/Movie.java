@@ -82,9 +82,7 @@ public class Movie implements Parcelable{
         }
     };
 
-//    public void setPosterUrl(String posterUrl) {
-//        this.posterUrl = posterUrl;
-//    }
+
     public String getPosterUrl(){
         return this.posterUrl;
     }
