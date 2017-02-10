@@ -31,22 +31,25 @@ public class JsonParser implements SuperParser {
     public List<Object> processData(String data,String dataModel) {
         this.json = data;
         try {
-            parseJson(new JSONObject(this.json));
-            List<Object> moviesObjects = new ArrayList<>();
-            for (HashMap<String, String> x : maps) {
-                Object object = null;
-                Class<?> cla;
-                Constructor<?> constructor;
-                try {
-                    cla = Class.forName(dataModel);
-                    constructor = cla.getConstructor(HashMap.class);
-                    object = constructor.newInstance(x);
-                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    Log.v("Test", "Mission error :" + e);
+            if(this.json != null){
+
+                parseJson(new JSONObject(this.json));
+                List<Object> moviesObjects = new ArrayList<>();
+                for (HashMap<String, String> x : maps) {
+                    Object object = null;
+                    Class<?> cla;
+                    Constructor<?> constructor;
+                    try {
+                        cla = Class.forName(dataModel);
+                        constructor = cla.getConstructor(HashMap.class);
+                        object = constructor.newInstance(x);
+                    } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                        Log.v("Test", "Mission error :" + e);
+                    }
+                    moviesObjects.add(object);
                 }
-                moviesObjects.add(object);
+                return moviesObjects;
             }
-            return moviesObjects;
         } catch (JSONException e) {
             e.printStackTrace();
         }

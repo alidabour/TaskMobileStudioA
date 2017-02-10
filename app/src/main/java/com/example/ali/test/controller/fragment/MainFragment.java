@@ -56,7 +56,11 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.v("Test","\n\n\n\n MainFragment");
         // Inflate the layout for this fragment
+        if(container !=null){
+            container.removeAllViews();
+        }
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.mainRecycleView);
         recyclerView.setHasFixedSize(true);
@@ -101,7 +105,8 @@ public class MainFragment extends Fragment {
 //                        .detach(MainFragment.this)
 //                        .hide(MainFragment.this)
 //                        .remove(MainFragment.this)
-                                .replace(R.id.fragment,detailFragment)
+                                .replace(R.id.fragment,detailFragment,"df")
+                                .addToBackStack(null)
                                 .commit();
                     }
                 });
@@ -112,10 +117,7 @@ public class MainFragment extends Fragment {
                 Log.v("MainFragment","OnError "+ errorMessage);
             }
         };
-
         ((DownloadActivity)getActivity()).fetch(onResultListener);
-
-
     }
 
 

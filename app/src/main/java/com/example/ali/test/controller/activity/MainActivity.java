@@ -1,7 +1,9 @@
 package com.example.ali.test.controller.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.ali.test.controller.fragment.MainFragment;
 import com.example.ali.test.core.DownloadActivityInterface;
 import com.example.ali.test.R;
 import com.example.ali.test.core.SuperParser;
@@ -21,7 +23,9 @@ public class MainActivity extends DownloadActivity implements DownloadActivityIn
         setContentView(R.layout.activity_main);
 //        if(savedInstanceState ==null){
 //            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.fragment,new DetailFragment())
+////                    .replace(R.id.fragment,new MainFragment())
+////                    .add(new MainFragment(),R.id.fragment)
+//                    .add(new MainFragment(),"tag")
 //                    .commit();
 //        }
 
@@ -53,9 +57,11 @@ public class MainActivity extends DownloadActivity implements DownloadActivityIn
         this.parser = parser;
     }
 
-//    @Override
-//    public void onBackPressed(){
-//        getFragmentManager().popBackStackImmediate();
-//    }
+    @Override
+    public void onBackPressed(){
+        Log.v("Test","OnBack");
+        getFragmentManager().popBackStackImmediate();
+
+    }
 
 }
